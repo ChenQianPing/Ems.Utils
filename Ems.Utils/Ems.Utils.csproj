@@ -52,6 +52,7 @@
     <Compile Include="Dtos\ParseObjectiveGrpOutput.cs" />
     <Compile Include="Dtos\ParseObjectQutOutput.cs" />
     <Compile Include="Dtos\ParseOptionOutput.cs" />
+    <Compile Include="Helper\ConvertHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TxtToJson.cs" />
   </ItemGroup>

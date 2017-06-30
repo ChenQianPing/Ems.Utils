@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ems.Utils;
 using Ems.Utils.Dtos;
+using Ems.Utils.Helper;
 
 namespace Test.Ems.Utils
 {
@@ -124,6 +125,19 @@ namespace Test.Ems.Utils
             Console.WriteLine(result);
 
             // 识别结果为：0; 0; 1,2; 2; 2
+            Console.ReadLine();
+        }
+
+        public void TestMethod3()
+        {
+            var lstValue = ConvertHelper.ValueTypeToList(3);
+
+            foreach (var value in lstValue)
+            {
+                Console.WriteLine(value);
+            }
+
+            // Console.WriteLine(lstValue);
             Console.ReadLine();
         }
     }
