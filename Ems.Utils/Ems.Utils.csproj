@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DetectOmrHelper.cs" />
+    <Compile Include="Dtos\DetectOmrInput.cs" />
     <Compile Include="Dtos\ParseColOutput.cs" />
     <Compile Include="Dtos\ParseFrameOutput.cs" />
     <Compile Include="Dtos\ParseFrameSettingOutput.cs" />

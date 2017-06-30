@@ -107,7 +107,7 @@ namespace Test.Ems.Utils
                     30, 17);
 
 
-            /* 识别结果为：0;0;1,2;2;2
+            /* 
              * 
              * 
              * 0  字母A~J
@@ -116,13 +116,14 @@ namespace Test.Ems.Utils
              * 3  自定义  自定义序列
              * 根据值类型判断选择的答案，如果值类型为0；
              * 
-             * 识别结果为：0;0;1,2;2;2
-             * 则答案为：A;A;B,C;C;C
+             * 如果识别结果为：0;0;1,2;2;2
+             * 则对应的答案为：A;A;B,C;C;C
              * 
              */
 
             Console.WriteLine(result);
 
+            // 识别结果为：0; 0; 1,2; 2; 2
             Console.ReadLine();
         }
     }

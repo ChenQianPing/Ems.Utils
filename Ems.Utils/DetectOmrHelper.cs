@@ -33,6 +33,8 @@ namespace Ems.Utils
         {
 
             /*
+             * 
+             * 静态调用，需要将Delphi编译生成的Dll放在程序的Bin目录下；
              * ;分隔；
              * ;;;;，没有识别出来是空  char(0)；
              * 
