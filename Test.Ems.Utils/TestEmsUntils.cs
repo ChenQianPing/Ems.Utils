@@ -130,7 +130,10 @@ namespace Test.Ems.Utils
 
         public void TestMethod3()
         {
-            var lstValue = ConvertHelper.ValueTypeToList(3);
+            var lstValue = ConvertHelper.ValueTypeToList(0, 4);
+
+
+            Console.WriteLine("Count:" + lstValue.Count);
 
             foreach (var value in lstValue)
             {
