@@ -16,7 +16,7 @@ namespace Ems.Utils.Helper
                 $@"B,C,A,A,B,B,C,C,C,A,#,B,#,#,B,#,#,#,#,#,D,D,B,C,A,C,A,B,B,C,#,#,#,A,D,#,#,E,D,F,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#";
             */
 
-            var lstOmr = ConvertHelper.StringToList(rcgOmr);
+            var lstOmr = ConvertHelper.StringToList(rcgOmr, ",");
 
             var lastOmrs = "";
             for (var i = 0; i < lstOmr.Count; i++)

@@ -9,12 +9,14 @@ namespace Ems.Utils.Helper
     public class ConvertHelper
     {
         #region ListToString
+
         /// <summary>
         /// 迭代List的每个子项，将他们用“,”隔开
         /// </summary>
         /// <param name="list"></param>
+        /// <param name="separator">分隔符，如：逗号,分号;</param>
         /// <returns></returns>
-        public static string ListToString(List<string> list)
+        public static string ListToString(List<string> list, string separator)
         {
             if (list == null)
             {
@@ -33,23 +35,25 @@ namespace Ems.Utils.Helper
                 }
                 else
                 {
-                    result.Append(",");
+                    result.Append(separator);
                 }
                 result.Append(str);
             }
 
             return result.ToString();
-
-
         }
+
+
         #endregion
 
         #region StringToList
-        public static List<string> StringToList(string strs)
+
+        public static List<string> StringToList(string strs, string separator)
         {
-            var str = strs.Split(Convert.ToChar(","));
+            var str = strs.Split(Convert.ToChar(separator));
             return str.ToList();
         }
+
         #endregion
 
         #region ValueTypeToList
@@ -76,7 +80,7 @@ namespace Ems.Utils.Helper
                     break;
             }
 
-            var lstValues =  ConvertHelper.StringToList(values);
+            var lstValues = ConvertHelper.StringToList(values, ",");
 
 
             var strs = "";
@@ -102,7 +106,7 @@ namespace Ems.Utils.Helper
                 }
             }
 
-            return ConvertHelper.StringToList(strs);
+            return ConvertHelper.StringToList(strs, ",");
         }
         #endregion
 
