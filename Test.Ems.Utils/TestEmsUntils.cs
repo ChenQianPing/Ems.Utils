@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Ems.Utils;
@@ -9,6 +10,8 @@ using Ems.Utils.Helper;
 
 namespace Test.Ems.Utils
 {
+    
+
     public class TestEmsUntils
     {
         public void TestMethod1()
@@ -101,7 +104,7 @@ namespace Test.Ems.Utils
         public void TestMethod2()
         {
             var result = DetectOmrHelper
-                .DetectOmr("0.jpg",
+                .DetectOmrByStatic("0.jpg",
                     175, 825, 218, 166,
                     "20,49,76,104,131",
                     "58,108,158",
@@ -143,5 +146,54 @@ namespace Test.Ems.Utils
             // Console.WriteLine(lstValue);
             Console.ReadLine();
         }
+
+        public void TestMethod4()
+        {
+
+            var rcgOmr =
+                $@"B,C,A,A,B,B,C,C,C,A,#,B,#,#,B,#,#,#,#,#,D,D,B,C,A,C,A,B,B,C,#,#,#,A,D,#,#,E,D,F,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#";
+
+            Console.WriteLine(rcgOmr);
+
+            var lstAnswers = new List<OmrAnswer>();
+
+            var answer1 = new OmrAnswer
+            {
+                SerialNo = 11,
+                Answer = "D"
+            };
+
+            var answer2 = new OmrAnswer
+            {
+                SerialNo = 13,
+                Answer = "D"
+            };
+
+            lstAnswers.Add(answer1);
+            lstAnswers.Add(answer2);
+
+            var result = ReformerEmsHelper.ParseOmrs(rcgOmr, lstAnswers);
+
+            Console.WriteLine(result);
+            Console.ReadLine();
+        }
+
+        public void TestMethod5()
+        {
+            var omrsResult = DetectOmrHelper.DetectOmrByDynamic(
+                @"E:\src\Ems.Utils\Ems.Utils\ThirdLib\re.dll",
+                "0.jpg",
+                175, 825, 218, 166,
+                "20,49,76,104,131",
+                "58,108,158",
+                30, 17);
+
+            Console.WriteLine(omrsResult);
+            Console.ReadLine();
+
+        }
+
+        
+
     }
 }

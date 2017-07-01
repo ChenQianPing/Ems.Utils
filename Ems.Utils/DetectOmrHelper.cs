@@ -4,18 +4,24 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Ems.Utils.Helper;
 
 namespace Ems.Utils
 {
+    // 动态调用，函数指针
+    public delegate IntPtr DetectOmr(string f, int x, int y, int width, int height, string rows, string cols,
+        int rwidth, int rheight);
+
     public static class DetectOmrHelper
     {
+        // 静态调用，DllImport声明
         [DllImport("re.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr DetectOMR(string f, int x, int y, int width, int height, string rows, string cols, int rwidth, int rheight);
 
         [DllImport("re.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr DetectOMR2(string f, int x, int y, int width, int height, string rows, string cols, int rwidth, int rheight);
 
-        #region Omr识别调用Delphi动态链接库
+        #region Omr识别静态调用Delphi动态链接库
         /// <summary>
         /// Omr识别
         /// </summary>
@@ -29,7 +35,7 @@ namespace Ems.Utils
         /// <param name="rwidth">选择题里面那个小框的width</param>
         /// <param name="rheigh">选择题里面那个小框的heigh</param>
         /// <returns></returns>
-        public static string DetectOmr(string f, int x, int y, int width, int height, string rows, string cols, int rwidth, int rheigh)
+        public static string DetectOmrByStatic(string f, int x, int y, int width, int height, string rows, string cols, int rwidth, int rheigh)
         {
 
             /*
@@ -45,6 +51,24 @@ namespace Ems.Utils
             var result = Marshal.PtrToStringAuto(
                 DetectOMR(f, x, y, width, height, rows, cols, rwidth, rheigh)
             );
+            return result;
+        }
+        #endregion
+
+        #region Omr识别静态动态Delphi动态链接库
+        public static string DetectOmrByDynamic(string dllPath, string f, int x, int y, int width, int height,
+            string rows, string cols, int rwidth, int rheigh)
+        {
+            // 动态加载C++ Dll
+            var dll = new NativeMethodHelper(dllPath);
+
+            // 读取函数指针，将函数指针封装成委托
+            var detect = (DetectOmr)dll.Invoke("DetectOMR", typeof(DetectOmr));
+
+            var omrs = detect(f, x, y, width, height, rows, cols, rwidth, rheigh);
+
+            var result = Marshal.PtrToStringAuto(omrs);
+
             return result;
         }
         #endregion

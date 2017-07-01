@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Ems.Utils.Helper;
 
 namespace Test.Ems.Utils
 {
@@ -14,8 +16,13 @@ namespace Test.Ems.Utils
 
             // new TestEmsUntils().TestMethod2();
 
-            new TestEmsUntils().TestMethod3();
+            // new TestEmsUntils().TestMethod3();
 
+            // new TestEmsUntils().TestMethod4();
+
+            new TestEmsUntils().TestMethod5();
+
+            
 
 
         }
