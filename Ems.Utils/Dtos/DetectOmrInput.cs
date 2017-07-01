@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ems.Utils.Dtos
 {
+    /*
     public class DetectOmrInput
     {
         public string PageId { get; set; }
@@ -28,4 +29,5 @@ namespace Ems.Utils.Dtos
         public int ColumnHeight { get; set; }
 
     }
+    */
 }
