@@ -18,9 +18,9 @@ namespace Test.Ems.Utils
 
             // new TestEmsUntils().TestMethod3();
 
-            new TestEmsUntils().TestMethod4();
+            // new TestEmsUntils().TestMethod4();
 
-            // new TestEmsUntils().TestMethod5();
+            new TestEmsUntils().TestMethod5();
 
             
 
