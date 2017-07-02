@@ -14,16 +14,16 @@ namespace Test.Ems.Utils
         {
             // new TestEmsUntils().TestMethod1();
 
-            new TestEmsUntils().TestMethod2();
+            // new TestEmsUntils().TestMethod2();
 
             // new TestEmsUntils().TestMethod3();
 
-            // new TestEmsUntils().TestMethod4();
+            new TestEmsUntils().TestMethod4();
 
             // new TestEmsUntils().TestMethod5();
 
 
-            new TestEmsUntils().TestMethod6();
+            // new TestEmsUntils().TestMethod6();
 
 
 

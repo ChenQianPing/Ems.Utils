@@ -64,7 +64,7 @@ namespace Ems.Utils.Helper
         #endregion
 
         #region ParseOmrs
-        public static string ParseOmrs(string rcgOmr, List<OmrAnswer> lstAnswers)
+        public static string ParseOmrs(List<Queue> lstQueue1, List<Queue> lstQueue2)
         {
             /*
              * 更新选择题答案，传入更新的序号列表；
@@ -72,38 +72,14 @@ namespace Ems.Utils.Helper
                 $@"B,C,A,A,B,B,C,C,C,A,#,B,#,#,B,#,#,#,#,#,D,D,B,C,A,C,A,B,B,C,#,#,#,A,D,#,#,E,D,F,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#";
             */
 
-            var lstOmr = ConvertHelper.StringToList(rcgOmr, ",");
+            var leftJoinSql =
+                from leftQueue in lstQueue1
+                join rightQueue in lstQueue2 on leftQueue.SerialNo equals rightQueue.SerialNo into temp
+                from temp01 in temp.DefaultIfEmpty()
+                select temp01 == null ? leftQueue.Value : temp01.Value;
 
-            var lastOmrs = "";
-            for (var i = 0; i < lstOmr.Count; i++)
-            {
-                var tempAnswer = "#";
+            return string.Join(",", leftJoinSql.ToList());
 
-                // Tips：数据库中从1开始编号，这里要加1；
-                if (lstAnswers.Exists(p => p.SerialNo == i + 1))
-                {
-                    var omrAnswer = lstAnswers.FirstOrDefault(p => p.SerialNo == i + 1);
-                    if (omrAnswer != null)
-                        tempAnswer = omrAnswer.Answer;
-
-                }
-                else
-                {
-                    tempAnswer = lstOmr[i];
-                }
-
-                if (string.IsNullOrEmpty(lastOmrs))
-                {
-                    lastOmrs = tempAnswer;
-                }
-                else
-                {
-                    lastOmrs = lastOmrs + "," + tempAnswer;
-                }
-
-            }
-
-            return lastOmrs;
         }
         #endregion
 
@@ -181,11 +157,11 @@ namespace Ems.Utils.Helper
         #endregion
     }
 
-    #region 解析OMR辅助类
-    public class OmrAnswer
+    #region 解析队列辅助类
+    public class Queue
     {
         public int SerialNo { get; set; }
-        public string Answer { get; set; }
+        public string Value { get; set; }
     }
     #endregion
 

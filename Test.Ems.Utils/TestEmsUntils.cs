@@ -155,24 +155,54 @@ namespace Test.Ems.Utils
 
             Console.WriteLine(rcgOmr);
 
-            var lstAnswers = new List<OmrAnswer>();
+            var serialNo = "";
+            for (var i = 1; i <= 60; i++)
+            {
+                if (string.IsNullOrEmpty(serialNo))
+                {
+                    serialNo = i.ToString();
+                }
+                else
+                {
+                    serialNo = serialNo + "," + i.ToString();
+                }
+            }
 
-            var answer1 = new OmrAnswer
+            var lstSerialNo = ConvertHelper.StringToList(serialNo, ",");
+            var lstRcgOmr = ConvertHelper.StringToList(rcgOmr, ",");
+
+            var lstQueue1 = new List<Queue>();
+
+            for (var i = 0; i < lstRcgOmr.Count; i++)
+            {
+                var tempEntity = new Queue
+                {
+                    SerialNo = Convert.ToInt32(lstSerialNo[i]),
+                    Value = lstRcgOmr[i]
+                };
+
+                lstQueue1.Add(tempEntity);
+
+            }
+
+            var lstAnswers = new List<Queue>();
+
+            var answer1 = new Queue
             {
                 SerialNo = 11,
-                Answer = "D"
+                Value = "D"
             };
 
-            var answer2 = new OmrAnswer
+            var answer2 = new Queue
             {
                 SerialNo = 13,
-                Answer = "D"
+                Value = "D"
             };
 
             lstAnswers.Add(answer1);
             lstAnswers.Add(answer2);
 
-            var result = ReformerEmsHelper.ParseOmrs(rcgOmr, lstAnswers);
+            var result = ReformerEmsHelper.ParseOmrs(lstQueue1, lstAnswers);
 
             Console.WriteLine(result);
             Console.ReadLine();
