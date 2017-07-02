@@ -4,22 +4,44 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using Ems.Utils.Helper;
 
-namespace Ems.Utils
+namespace RcgOmrConsole
 {
-    // 动态调用，函数指针
-    public delegate IntPtr DetectOmr(string f, int x, int y, int width, int height, string rows, string cols,
-        int rwidth, int rheight);
-
-    public static class DetectOmrHelper
+    class Program
     {
         // 静态调用，DllImport声明
         [DllImport("re.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr DetectOMR(string f, int x, int y, int width, int height, string rows, string cols, int rwidth, int rheight);
 
-        [DllImport("re.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern IntPtr DetectOMR2(string f, int x, int y, int width, int height, string rows, string cols, int rwidth, int rheight);
+
+        static void Main(string[] args)
+        {
+            if (args.Length != 9)
+            {
+                Console.WriteLine("识别方法需要传入9个参数！");
+                return;
+            }
+
+            var f = args[0];
+            var x = Convert.ToInt32(args[1]);
+            var y = Convert.ToInt32(args[2]);
+            var width = Convert.ToInt32(args[3]);
+            var height = Convert.ToInt32(args[4]);
+            var rows = args[5];
+            var cols = args[6];
+            var rwidth = Convert.ToInt32(args[7]);
+            var rheigh = Convert.ToInt32(args[8]);
+
+            try
+            {
+                var omrs = DetectOmrByStatic(f, x, y, width, height, rows, cols, rwidth, rheigh);
+                Console.WriteLine(omrs);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
 
         #region Omr识别静态调用Delphi动态链接库
         /// <summary>
@@ -37,40 +59,17 @@ namespace Ems.Utils
         /// <returns></returns>
         public static string DetectOmrByStatic(string f, int x, int y, int width, int height, string rows, string cols, int rwidth, int rheigh)
         {
-
-            /*
-             * 
-             * 静态调用，需要将Delphi编译生成的Dll放在程序的Bin目录下；
-             * ;分隔；
-             * ;;;;，没有识别出来是空  char(0)；
-             * 
-             * DetectOMR2 会弹出识别结果窗口；
-             * DetectOMR 不会弹出识别结果窗口；
-             */
-
             var result = Marshal.PtrToStringAuto(
                 DetectOMR(f, x, y, width, height, rows, cols, rwidth, rheigh)
             );
             return result;
         }
         #endregion
-
-        #region Omr识别静态动态Delphi动态链接库
-        public static string DetectOmrByDynamic(string dllPath, string f, int x, int y, int width, int height,
-            string rows, string cols, int rwidth, int rheigh)
-        {
-            // 动态加载C++ Dll
-            var dll = new NativeMethodHelper(dllPath);
-
-            // 读取函数指针，将函数指针封装成委托
-            var detect = (DetectOmr)dll.Invoke("DetectOMR", typeof(DetectOmr));
-
-            var omrs = detect(f, x, y, width, height, rows, cols, rwidth, rheigh);
-
-            var result = Marshal.PtrToStringAuto(omrs);
-
-            return result;
-        }
-        #endregion
     }
 }
+
+
+/* 调用示例：需要传入9个参数；
+ * RcgOmrConsole "0.jpg" "175" "825" "218" "166" "20,49,76,104,131" "58,108,158" "30" "17"
+ * 命名为多个exe，如：RcgOmrConsole01、RcgOmrConsole02；
+ */

@@ -128,12 +128,12 @@ namespace Test.Ems.Utils
             Console.WriteLine(result);
 
             // 识别结果为：0; 0; 1,2; 2; 2
-            Console.ReadLine();
+            // Console.ReadLine();
         }
 
         public void TestMethod3()
         {
-            var lstValue = ConvertHelper.ValueTypeToList(0, 4);
+            var lstValue = ReformerEmsHelper.ValueTypeToList(0, 4);
 
 
             Console.WriteLine("Count:" + lstValue.Count);
@@ -193,7 +193,18 @@ namespace Test.Ems.Utils
 
         }
 
-        
+        public void TestMethod6()
+        {
+
+            var result = ReformerEmsHelper.ParseDetectResult(@"0; 0; 1,2; 2; 2", 0);
+
+            Console.WriteLine(result);
+            Console.ReadLine();
+
+        }
+
+
+
 
     }
 }

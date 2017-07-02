@@ -7,10 +7,15 @@ using System.Threading.Tasks;
 namespace Ems.Utils.Dtos
 {
     /*
-    public class DetectOmrInput
+    public class DetectAreaInput
     {
         public string PageId { get; set; }
+        public List<DetectArea> DetectAreas { get; set; }
+    }
 
+    public class DetectArea
+    {
+        public List<string> QuestionsIds { get; set; }
         public int GroupX { get; set; }
         public int GroupY { get; set; }
         public int GroupWidth { get; set; }
@@ -24,10 +29,10 @@ namespace Ems.Utils.Dtos
         /// 一行多少个，间隔，逗号分隔，Pos_X
         /// </summary>
         public string ColumnPosX { get; set; }
-
         public int ColumnWidth { get; set; }
         public int ColumnHeight { get; set; }
 
     }
     */
+
 }

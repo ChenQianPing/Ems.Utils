@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ems.Utils
+namespace Ems.Utils.Helper
 {
     public class TxtToJson
     {
