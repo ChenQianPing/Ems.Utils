@@ -226,7 +226,9 @@ namespace Test.Ems.Utils
         public void TestMethod6()
         {
 
-            var result = ReformerEmsHelper.ParseDetectResult(@"0; 0; 1,2; 2; 2", 0);
+            var tempStr = @";;;;;;;;;;;;;;";
+
+            var result = ReformerEmsHelper.ParseDetectResult(tempStr, 0);
 
             Console.WriteLine(result);
             Console.ReadLine();

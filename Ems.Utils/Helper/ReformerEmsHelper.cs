@@ -88,6 +88,8 @@ namespace Ems.Utils.Helper
         {
             /*
             detectResult = @"0; 0; 1,2; 2; 2";
+            ";;2;;;;;;;;;;;;"
+            "0;1;1;0;1;1;2;1;2;;1;1;2;0;2"
             valueType = 0;
             */
 
@@ -124,9 +126,17 @@ namespace Ems.Utils.Helper
 
                     // 这里以取到的值做为列表序号；
                     var tempValue = lstDetectResult1[i];
-                    var index = Convert.ToInt32(tempValue);
 
-                    tempAnswer = lstValues[index];
+                    if (string.IsNullOrEmpty(tempValue))
+                    {
+                        tempAnswer = "#";
+                    }
+                    else
+                    {
+                        var index = Convert.ToInt32(tempValue);
+                        tempAnswer = lstValues[index];
+                    }
+                   
 
                     // Console.WriteLine("tempAnswer:" + tempAnswer);
 
