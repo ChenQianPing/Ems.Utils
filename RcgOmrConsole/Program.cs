@@ -69,7 +69,8 @@ namespace RcgOmrConsole
 }
 
 
-/* 调用示例：需要传入9个参数；
+/* 
+ * 调用示例：需要传入9个参数；
  * RcgOmrConsole "0.jpg" "175" "825" "218" "166" "20,49,76,104,131" "58,108,158" "30" "17"
  * 命名为多个exe，如：RcgOmrConsole01、RcgOmrConsole02；
  */
