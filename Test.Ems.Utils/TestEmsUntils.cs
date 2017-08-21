@@ -10,8 +10,6 @@ using Ems.Utils.Helper;
 
 namespace Test.Ems.Utils
 {
-    
-
     public class TestEmsUntils
     {
         public void TestMethod1()
@@ -219,7 +217,7 @@ namespace Test.Ems.Utils
                 30, 17);
 
             Console.WriteLine(omrsResult);
-            Console.ReadLine();
+            // Console.ReadLine();
 
         }
 

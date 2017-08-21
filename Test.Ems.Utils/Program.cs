@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -20,15 +21,27 @@ namespace Test.Ems.Utils
 
             // new TestEmsUntils().TestMethod4();
 
-            // new TestEmsUntils().TestMethod5();
+            var stopwatch = new Stopwatch();
+            // 第一次计时
+            stopwatch.Start();
 
+            // 判断当前Stopwatch的状态
+            Console.WriteLine($"Stopwatch is running:{stopwatch.IsRunning}"); 
 
-            new TestEmsUntils().TestMethod6();
+            // System.Threading.Thread.Sleep(1000); // 耗时操作
 
+            new TestEmsUntils().TestMethod5();
 
+            stopwatch.Stop();
 
+            // 这里使用时间差来输出
+            Console.WriteLine($"Using Elapsed output runTime:{stopwatch.Elapsed.ToString()}");
 
+            // 这里面使用毫秒来输出
+            Console.WriteLine($"Using ElapsedMilliseconds output runTime:{stopwatch.ElapsedMilliseconds}");
+            Console.WriteLine("===================================================");
 
+            Console.ReadKey();
         }
     }
 }
