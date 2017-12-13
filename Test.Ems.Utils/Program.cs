@@ -26,11 +26,20 @@ namespace Test.Ems.Utils
             stopwatch.Start();
 
             // 判断当前Stopwatch的状态
-            Console.WriteLine($"Stopwatch is running:{stopwatch.IsRunning}"); 
+            Console.WriteLine($"Stopwatch is running:{stopwatch.IsRunning}");
 
             // System.Threading.Thread.Sleep(1000); // 耗时操作
 
-            new TestEmsUntils().TestMethod5();
+            // new TestEmsUntils().TestMethod7();
+            var detectResult = new TestEmsUntils().TestMethod5();
+
+            Console.WriteLine("detectResult：" + detectResult);
+
+            // 识别结果解析成答案；
+            // var answers = ReformerEmsHelper.ParseDetectResult(detectResult, 0);
+
+            var answers = ReformerEmsHelper.ParseDetectResult2(detectResult, 0, 20);
+            Console.WriteLine("answers：" + answers);
 
             stopwatch.Stop();
 

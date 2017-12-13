@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -206,8 +208,9 @@ namespace Test.Ems.Utils
             Console.ReadLine();
         }
 
-        public void TestMethod5()
+        public string TestMethod5()
         {
+            /*
             var omrsResult = DetectOmrHelper.DetectOmrByDynamic(
                 @"E:\src\Ems.Utils\Ems.Utils\ThirdLib\re.dll",
                 "0.jpg",
@@ -215,8 +218,19 @@ namespace Test.Ems.Utils
                 "20,49,76,104,131",
                 "58,108,158",
                 30, 17);
+            */
 
-            Console.WriteLine(omrsResult);
+            var omrsResult = DetectOmrHelper.DetectOmrByDynamic(
+                @"E:\src\Ems.Utils\Ems.Utils\ThirdLib\re.dll",
+                "8-1.jpg",
+                135, 703, 912, 81,
+                "3,24,47",
+                "17,59,99,136,171,249,283,325,365,400,477,516,559,596,635,710,746,786,828,864",
+                30, 17);
+
+            return omrsResult;
+
+            // Console.WriteLine(omrsResult);
             // Console.ReadLine();
 
         }
@@ -229,6 +243,49 @@ namespace Test.Ems.Utils
             var result = ReformerEmsHelper.ParseDetectResult(tempStr, 0);
 
             Console.WriteLine(result);
+            Console.ReadLine();
+
+        }
+
+        #region 在图片上画框
+        /// <summary>
+        /// Lib #1.在图片上画框
+        /// </summary>
+        /// <param name="bmp"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        private static Bitmap DrawRectangleInPicture(Bitmap bmp, int x, int y, int width, int height)
+        {
+            if (bmp == null) return null;
+
+            var g = Graphics.FromImage(bmp);
+
+            g.DrawRectangle(Pens.Red, new Rectangle(x, y, width, height));
+
+            g.Dispose();
+
+            return bmp;
+        }
+        #endregion
+
+
+        public void TestMethod7()
+        {
+            const string pPath = @"E:\src\Ems.Utils\Test.Ems.Utils\Resources\8-1.jpg";
+            const string pSavedPath = @"E:\src\Ems.Utils\Test.Ems.Utils\Resources\8-2.jpg";
+
+            var bmp = new Bitmap(Image.FromFile(pPath));
+
+            var processedImg = DrawRectangleInPicture(bmp, 138, 697, 912, 81);
+
+            processedImg.Save(pSavedPath, ImageFormat.Jpeg);
+            processedImg.Dispose();
+
+            Console.Write("Processing completed");
+
             Console.ReadLine();
 
         }

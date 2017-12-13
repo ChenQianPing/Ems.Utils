@@ -83,6 +83,108 @@ namespace Ems.Utils.Helper
         }
         #endregion
 
+        #region 解析识别结果，竖的情况
+        /// <summary>
+        /// 解析识别结果，竖的情况
+        /// </summary>
+        /// <param name="detectResult"></param>
+        /// <param name="valueType">值类型：0 字母，1 数字，2 TF，默认为0</param>
+        /// <param name="items">题目数</param>
+        /// <returns></returns>
+        public static string ParseDetectResult2(string detectResult, int valueType, int items)
+        {
+            var lstDetectResult = ConvertHelper.StringToList(detectResult, ";");
+            var dict = new Dictionary<string, string>();
+            var lstTemp = new List<string>();
+
+            for (var i = 1; i <= items; i++)
+            {
+                lstTemp.Add(i.ToString());
+            }
+
+            for (var li = 0; li < lstDetectResult.Count; li++)
+            {
+                if (string.IsNullOrEmpty(lstDetectResult[li]))
+                {
+                    continue;
+                }
+
+                var lstTemp2 = lstDetectResult[li].Split(',').ToList<string>();
+
+                for (var lj = 0; lj < lstTemp2.Count; lj++)
+                {
+                    if (string.IsNullOrEmpty(lstTemp2[lj]))
+                    {
+                        continue;
+                    }
+
+                    var qutsindex = int.Parse(lstTemp2[lj].ToString());
+
+                    dict[lstTemp[qutsindex]] = "";
+
+                    if (valueType.Equals(1))
+                    {
+                        dict[lstTemp[qutsindex]] += li.ToString();
+                    }
+                    else if (valueType.Equals(2))
+                    {
+                        if (li >= 0 && li <= 1)
+                        {
+                            switch (li)
+                            {
+                                case 0:
+                                    dict[lstTemp[qutsindex]] += "T";
+                                    break;
+                                case 1:
+                                    dict[lstTemp[qutsindex]] += "F";
+                                    break;
+                                default:
+                                    dict[lstTemp[qutsindex]] += "#";
+                                    break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (li >= 0 && li <= 26)
+                        {
+                            var array = new byte[1];
+                            array[0] = (byte) (Convert.ToInt32(li + 'A')); // ASCII码强制转换二进制
+                            dict[lstTemp[qutsindex]] += Convert.ToString(Encoding.ASCII.GetString(array));
+                        }
+                    }
+                }
+            }
+
+            var lstQueue1 = new List<Queue>();
+            var lstQueue2 = new List<Queue>();
+
+            foreach (var result in dict)
+            {
+                var queue = new Queue
+                {
+                    SerialNo = int.Parse(result.Key),
+                    Value = result.Value
+                };
+                lstQueue1.Add(queue);
+            }
+
+            for (var i = 1; i <= items; i++)
+            {
+                var queue = new Queue
+                {
+                    SerialNo = i,
+                    Value = "#"
+                };
+                lstQueue2.Add(queue);
+            }
+
+            // 结果处理
+            var finalResult = ParseOmrs(lstQueue2, lstQueue1);
+            return finalResult;
+        }
+        #endregion
+
         #region 识别结果转成选择题答案
         public static string ParseDetectResult(string detectResult, int valueType)
         {
